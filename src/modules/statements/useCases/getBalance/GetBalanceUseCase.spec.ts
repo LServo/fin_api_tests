@@ -49,12 +49,22 @@ describe('Get Balance Use Case', () => {
   it('Should be able to get balance', async () => {
     const statement = await getBalanceUseCase.execute({user_id: userId})
 
-    expect(statement.statement[0]).toHaveProperty('id')
+    expect(statement).toHaveProperty('balance')
+    expect(statement.balance).toEqual(statement.statement.length > 0 ? userAmount : 0)
+  })
 
-    expect(statement.balance).toEqual(userAmount)
-    expect(statement.statement[0].id).toEqual(statementId)
-    expect(statement.statement[0].user_id).toEqual(userId)
-    expect(statement.statement[0].amount).toEqual(userAmount)
+  it('Should be able to get balance and statement if have one', async () => {
+    const statement = await getBalanceUseCase.execute({user_id: userId})
+  
+    if (statement.statement.length > 0) {
+      expect(statement.balance).toEqual(userAmount)
+      expect(statement.statement[0]).toHaveProperty('id')
+      expect(statement.statement[0].id).toEqual(statementId)
+      expect(statement.statement[0].user_id).toEqual(userId)
+      expect(statement.statement[0].amount).toEqual(userAmount)
+    } else {
+      expect(statement.balance).toEqual(0)
+    }
   })
 
   it('Should not be able to get a balance of a user what not exists', async () => {
