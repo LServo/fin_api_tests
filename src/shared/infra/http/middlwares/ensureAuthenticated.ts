@@ -15,7 +15,7 @@ export async function ensureAuthenticated(
   next: NextFunction
 ) {
   const authHeader = request.headers.authorization;
-
+  
   if (!authHeader) {
     throw new JWTTokenMissingError()
   }
