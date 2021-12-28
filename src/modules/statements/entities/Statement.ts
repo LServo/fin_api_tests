@@ -1,9 +1,11 @@
+import { Transfer } from '@modules/transfers/entities/Transfer';
 import {
   Column,
   CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn
 } from 'typeorm';
 import { v4 as uuid } from 'uuid';
